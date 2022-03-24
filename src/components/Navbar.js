@@ -1,7 +1,20 @@
 // External Import
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-function Navbar() {
+// Internal Import
+import NoProfilePic from '../assets/noProfilePic.jpg';
+import { logoutUser } from '../redux/actions/authActions';
+
+const Navbar = () => {
+  const Auth = useSelector(state => state.Auth);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <div className='container-fluid'>
@@ -18,71 +31,80 @@ function Navbar() {
         </button>
 
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-          <a className='navbar-brand mt-2 mt-lg-0' href='/'>
+          <Link className='navbar-brand mt-2 mt-lg-0' to='/'>
             My Blog
-          </a>
+          </Link>
           <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
             <li className='nav-item'>
-              <a className='nav-link' href='/'>
+              <Link className='nav-link' to='/'>
                 Home
-              </a>
+              </Link>
             </li>
             <li className='nav-item'>
-              <a className='nav-link' href='/'>
+              <Link className='nav-link' to='/'>
                 Title 1
-              </a>
+              </Link>
             </li>
             <li className='nav-item'>
-              <a className='nav-link' href='/'>
+              <Link className='nav-link' to='/'>
                 Title 2
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
 
         <div className='d-flex align-items-center'>
-          <div className='dropdown'>
-            <a
-              className='dropdown-toggle d-flex align-items-center hidden-arrow'
-              href='/'
-              id='navbarDropdownMenuAvatar'
-              role='button'
-              data-mdb-toggle='dropdown'
-              aria-expanded='false'
-            >
-              <img
-                src='https://cdn.pixabay.com/photo/2016/09/01/08/24/smiley-1635449_1280.png'
-                className='rounded-circle'
-                height='25'
-                alt='Black and White Portrait of a Man'
-                loading='lazy'
-              />
-            </a>
-            <ul
-              className='dropdown-menu dropdown-menu-end'
-              aria-labelledby='navbarDropdownMenuAvatar'
-            >
-              <li>
-                <a className='dropdown-item' href='/'>
-                  My profile
-                </a>
-              </li>
-              <li>
-                <a className='dropdown-item' href='/'>
-                  Settings
-                </a>
-              </li>
-              <li>
-                <a className='dropdown-item' href='/'>
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>
+          {!Auth.isAuthenticated && (
+            <Link to='/auth' className='btn btn-primary'>
+              <i className='fas fa-user'></i> Login
+            </Link>
+          )}
+
+          {Auth.isAuthenticated && (
+            <div className='dropdown'>
+              <a
+                className='dropdown-toggle d-flex align-items-center hidden-arrow'
+                href='/'
+                id='navbarDropdownMenuAvatar'
+                role='button'
+                data-mdb-toggle='dropdown'
+                aria-expanded='false'
+              >
+                <img
+                  src={Auth.user.profilePhoto.hasPhoto ? Auth.user.profilePhoto.url : NoProfilePic}
+                  className='rounded-circle'
+                  width='40'
+                  height='40'
+                  alt='profile'
+                  loading='lazy'
+                />
+              </a>
+              <ul
+                className='dropdown-menu dropdown-menu-end'
+                aria-labelledby='navbarDropdownMenuAvatar'
+              >
+                <li>
+                  <Link className='dropdown-item' to='/'>
+                    My profile
+                  </Link>
+                </li>
+                <li>
+                  <Link className='dropdown-item' to='/'>
+                    Settings
+                  </Link>
+                </li>
+                <li>
+                  <span className='dropdown-item' onClick={handleLogout}>
+                    Logout
+                  </span>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </nav>
   );
-}
+};
 
-export default Navbar;
+export default Navbar; //

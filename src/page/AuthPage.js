@@ -1,8 +1,8 @@
 // External Import
-import { MDBAccordion } from 'mdb-react-ui-kit';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { MDBInput } from 'mdb-react-ui-kit';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin, registerUser } from '../redux/actions/authActions';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,10 +11,39 @@ const AuthPage = () => {
   const [password, setPassword] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [emailOrUsername, setEmailOrUsername] = useState('');
+  const Auth = useSelector(state => state.Auth);
+  const dispatch = useDispatch();
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (password.length >= 6) {
+      setBtnDisabled(false);
+      if (Auth.loading) {
+        setBtnDisabled(true);
+      } else {
+        setBtnDisabled(false);
+      }
+    } else {
+      setBtnDisabled(true);
+    }
+  }, [password, Auth]);
 
-  const handleSubmit = e => {};
+  const handleSubmit = e => {
+    e.preventDefault();
+    isLogin
+      ? dispatch(
+          userLogin({
+            emailOrUsername,
+            password
+          })
+        )
+      : dispatch(
+          registerUser({
+            email,
+            username,
+            password
+          })
+        );
+  };
 
   return (
     <section className='vh-100' style={{ backgroundColor: '#eee' }}>
@@ -28,7 +57,13 @@ const AuthPage = () => {
                     <p className='text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4'>
                       {isLogin ? 'Login' : 'Register'}
                     </p>
-
+                    <p className='text-center'>
+                      {Auth.error.msg !== null && (
+                        <span className='text-danger'>
+                          {Auth.error.msg !== 'Login To See The Content.' && Auth.error.msg}
+                        </span>
+                      )}
+                    </p>
                     <form onSubmit={e => handleSubmit(e)} className='mx-1 mx-md-4'>
                       {!isLogin && (
                         <div className='d-flex flex-row align-items-center mb-4'>
@@ -40,6 +75,7 @@ const AuthPage = () => {
                               type='email'
                               onChange={e => setEmail(e.target.value)}
                               value={email}
+                              required
                             />
                           </div>
                         </div>
@@ -53,8 +89,9 @@ const AuthPage = () => {
                               label='Email or Username'
                               id='input-emailorusername'
                               type='text'
-                              onChange={e => setEmail(e.target.value)}
+                              onChange={e => setEmailOrUsername(e.target.value)}
                               value={emailOrUsername}
+                              required
                             />
                           </div>
                         </div>
@@ -70,6 +107,7 @@ const AuthPage = () => {
                               type='text'
                               onChange={e => setUsername(e.target.value)}
                               value={username}
+                              required
                             />
                           </div>
                         </div>
@@ -84,13 +122,21 @@ const AuthPage = () => {
                             type='password'
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            required
                           />
+                          {!isLogin && (
+                            <div className='form-text'>Password Must Be At Least 6 Characters</div>
+                          )}
                         </div>
                       </div>
 
                       <div className='d-flex justify-content-center mx-4 mb-3 mb-lg-4'>
-                        <button type='button' className='btn btn-primary btn-lg'>
-                          {isLogin ? 'Login' : 'Register'}
+                        <button
+                          type='submit'
+                          disabled={btnDisabled}
+                          className='btn btn-primary btn-lg'
+                        >
+                          {Auth.loading ? 'Loading...' : isLogin ? 'Login' : 'Register'}
                         </button>
                       </div>
                       <div className='d-flex justify-content-center mx-4 mb-3 mb-lg-4'>
