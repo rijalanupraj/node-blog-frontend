@@ -31,7 +31,7 @@ export const getUser = () => dispatch => {
       dispatch({
         type: AUTH_ERROR,
         payload: {
-          msg: err.response.data.message,
+          msg: '',
           status: err.response.status
         }
       });

@@ -37,6 +37,7 @@ export const Auth = (state = initialState, action) => {
         ...state,
         token: action.payload,
         isAuthenticated: true,
+        user: action.payload.user,
         loading: false,
         error: {
           msg: null,
