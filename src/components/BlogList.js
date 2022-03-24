@@ -1,20 +1,28 @@
 // External Import
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Internal Import
 import BlogCard from './BlogCard';
+import { getAllPosts } from '../redux/actions/postActions';
 
 function BlogList() {
+  const Post = useSelector(state => state.Post);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
+
+  const renderPosts = () => {
+    return Post.posts.map(post => {
+      return <BlogCard key={post._id} post={post} />;
+    });
+  };
+
   return (
     <section>
-      <div class='row gx-lg-5'>
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-      </div>
+      <div className='row gx-lg-5'>{renderPosts()}</div>
     </section>
   );
 }

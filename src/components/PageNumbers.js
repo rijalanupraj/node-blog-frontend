@@ -2,30 +2,30 @@ import React from 'react';
 
 function PageNumbers() {
   return (
-    <nav class='my-4' aria-label='...'>
-      <ul class='pagination pagination-circle justify-content-center'>
-        <li class='page-item'>
-          <a class='page-link' href='/' tabindex='-1' aria-disabled='true'>
+    <nav className='my-4' aria-label='...'>
+      <ul className='pagination pagination-circle justify-content-center'>
+        <li className='page-item'>
+          <a className='page-link' href='/' tabindex='-1' aria-disabled='true'>
             Previous
           </a>
         </li>
-        <li class='page-item'>
-          <a class='page-link' href='/'>
+        <li className='page-item'>
+          <a className='page-link' href='/'>
             1
           </a>
         </li>
-        <li class='page-item active' aria-current='page'>
-          <a class='page-link' href='/'>
-            2 <span class='sr-only'>(current)</span>
+        <li className='page-item active' aria-current='page'>
+          <a className='page-link' href='/'>
+            2 <span className='sr-only'>(current)</span>
           </a>
         </li>
-        <li class='page-item'>
-          <a class='page-link' href='/'>
+        <li className='page-item'>
+          <a className='page-link' href='/'>
             3
           </a>
         </li>
-        <li class='page-item'>
-          <a class='page-link' href='/'>
+        <li className='page-item'>
+          <a className='page-link' href='/'>
             Next
           </a>
         </li>
