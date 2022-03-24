@@ -5,7 +5,8 @@ import {
   POST_LOADING,
   GET_POST_BY_ID,
   GET_POST_BY_SLUG,
-  GET_ALL_POSTS
+  GET_ALL_POSTS,
+  ADD_COMMENT
 } from '../actions/types';
 
 const initialState = {
@@ -43,6 +44,17 @@ export const Post = (state = initialState, action) => {
         ...state,
         error: { msg: null, status: null },
         loading: true
+      };
+
+    case ADD_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: [action.payload.comment, ...state.post.comments],
+          loading: false,
+          error: { msg: null, status: null }
+        }
       };
 
     default:
