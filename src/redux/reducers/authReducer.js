@@ -26,7 +26,7 @@ export const Auth = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload,
+        user: action.payload.user,
         loading: false
       };
 

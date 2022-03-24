@@ -1,10 +1,6 @@
-// External Import
-import axios from 'axios';
-
 // Internal Import
 import { GET_USER, USER_LOGIN, REGISTER_USER, LOGOUT_USER, LOADING, AUTH_ERROR } from './types';
-
-const API_URL = 'http://localhost:8000/api/v1';
+import API from '../../api/api';
 
 // Loading
 export const loading = () => dispatch => {
@@ -26,8 +22,7 @@ const tokenConfig = () => {
 // Get User Data
 export const getUser = () => dispatch => {
   dispatch({ type: LOADING });
-  axios
-    .get(`${API_URL}/user/`, tokenConfig())
+  API.get(`user`, tokenConfig())
     .then(res => res.data)
     .then(data => {
       dispatch({ type: GET_USER, payload: data });
@@ -36,7 +31,7 @@ export const getUser = () => dispatch => {
       dispatch({
         type: AUTH_ERROR,
         payload: {
-          msg: err.response.data.errorMessage,
+          msg: err.response.data.message,
           status: err.response.status
         }
       });
@@ -46,8 +41,7 @@ export const getUser = () => dispatch => {
 // User Login
 export const userLogin = loginData => dispatch => {
   dispatch({ type: LOADING });
-  axios
-    .post(`${API_URL}/auth/login`, loginData)
+  API.post(`/auth/login`, loginData)
     .then(res => res.data)
     .then(data => {
       dispatch({ type: USER_LOGIN, payload: data });
@@ -56,7 +50,7 @@ export const userLogin = loginData => dispatch => {
       dispatch({
         type: AUTH_ERROR,
         payload: {
-          msg: err.response.data.errorMessage,
+          msg: err.response.data.message,
           status: err.response.status
         }
       });
@@ -66,8 +60,7 @@ export const userLogin = loginData => dispatch => {
 // Register User
 export const registerUser = registerData => dispatch => {
   dispatch({ type: LOADING });
-  axios
-    .post(`${API_URL}/auth/register`, registerData)
+  API.post(`/auth/register`, registerData)
     .then(res => res.data)
     .then(data => {
       dispatch({ type: REGISTER_USER, payload: data });
@@ -76,7 +69,7 @@ export const registerUser = registerData => dispatch => {
       dispatch({
         type: AUTH_ERROR,
         payload: {
-          msg: err.response.data.errorMessage,
+          msg: err.response.data.message,
           status: err.response.status
         }
       });

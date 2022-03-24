@@ -1,6 +1,9 @@
 // External Import
 import React from 'react';
 
+// Internal Import
+import NoProfilePic from '../assets/noProfilePic.jpg';
+
 function Navbar() {
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
@@ -51,10 +54,10 @@ function Navbar() {
               aria-expanded='false'
             >
               <img
-                src='https://cdn.pixabay.com/photo/2016/09/01/08/24/smiley-1635449_1280.png'
+                src={NoProfilePic}
                 className='rounded-circle'
                 height='25'
-                alt='Black and White Portrait of a Man'
+                alt='profile'
                 loading='lazy'
               />
             </a>

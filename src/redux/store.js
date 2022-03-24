@@ -8,25 +8,11 @@ import reducers from './reducers';
 const initialState = {};
 const middleware = [thunk];
 
+// For React Dev Tools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 // Initialize Store with reducers and middleware
-const Store = createStore(reducers, initialState, compose(applyMiddleware(...middleware)));
-
-// Get Token from Local Storage
-const tokenConfig = () => {
-  const token = localStorage.getItem('user-token');
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  if (token) config.headers['Authorization'] = `Bearer ${token}`;
-  return config;
-};
-
-// Subscribe to store changes
-Store.subscribe(() => {
-  const { lastAction, Auth } = Store.getState();
-});
+const Store = createStore(reducers, initialState, composeEnhancers(applyMiddleware(...middleware)));
 
 // Export Store
 export default Store;
