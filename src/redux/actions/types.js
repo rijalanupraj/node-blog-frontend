@@ -34,3 +34,5 @@ export const PROFILE_ERROR = 'PROFILE_ERROR';
 
 export const FOLLOW_USER = 'FOLLOW_USER';
 export const UNFOLLOW_USER = 'UNFOLLOW_USER';
+
+export const GET_TIMELINE_POSTS = 'GET_TIMELINE_POSTS';

@@ -19,7 +19,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className='position-relative' style={{ minHeight: '80vh' }}>
+      <div className='position-relative' style={{ minHeight: '97vh' }}>
         <div style={{ paddingBottom: '2.5rem' }}>
           <Navbar />
           <MyRoutes />

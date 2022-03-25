@@ -5,7 +5,8 @@ import {
   GET_POST_BY_ID,
   CREATE_POST,
   GET_POST_BY_SLUG,
-  GET_ALL_POSTS
+  GET_ALL_POSTS,
+  GET_TIMELINE_POSTS
 } from './types';
 import API from '../../api/api';
 
@@ -93,6 +94,32 @@ export const createPost = data => dispatch => {
     })
     .catch(err => {
       console.log(err);
+      dispatch({
+        type: POST_ERROR,
+        payload: {
+          msg: err.response.data.message,
+          status: err.response.status
+        }
+      });
+    });
+};
+
+export const getTimelinePosts = () => dispatch => {
+  dispatch({ type: POST_LOADING });
+
+  API.get(`/post/user/timeline`, tokenConfig())
+    .then(res => {
+      return res.data;
+    })
+    .then(data => {
+      dispatch({
+        type: GET_TIMELINE_POSTS,
+        payload: {
+          posts: data.posts[0]
+        }
+      });
+    })
+    .catch(err => {
       dispatch({
         type: POST_ERROR,
         payload: {

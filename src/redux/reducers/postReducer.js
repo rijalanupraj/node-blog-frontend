@@ -9,7 +9,8 @@ import {
   ADD_COMMENT,
   UPDATE_COMMENT,
   DELETE_COMMENT,
-  CREATE_POST
+  CREATE_POST,
+  GET_TIMELINE_POSTS
 } from '../actions/types';
 
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
   post: {},
   error: { msg: null, status: null },
   loading: false,
-  createdPost: {}
+  createdPost: {},
+  timelinePosts: []
 };
 
 export const Post = (state = initialState, action) => {
@@ -99,6 +101,13 @@ export const Post = (state = initialState, action) => {
         error: { msg: null, status: null },
         posts: [action.payload.post, ...state.posts],
         createdPost: action.payload.post
+      };
+    case GET_TIMELINE_POSTS:
+      return {
+        ...state,
+        loading: false,
+        error: { msg: null, status: null },
+        timelinePosts: action.payload.posts || []
       };
 
     default:

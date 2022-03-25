@@ -40,6 +40,12 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
+
+            <li className='nav-item'>
+              <Link className='nav-link' to='/posts'>
+                Posts
+              </Link>
+            </li>
             <li className='nav-item'>
               {Auth.isAuthenticated && (
                 <Link className='nav-link' to='/create'>
@@ -48,9 +54,11 @@ const Navbar = () => {
               )}
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' to='/'>
-                Title 2
-              </Link>
+              {Auth.isAuthenticated && (
+                <Link className='nav-link' to='/timeline'>
+                  Timeline
+                </Link>
+              )}
             </li>
           </ul>
         </div>
