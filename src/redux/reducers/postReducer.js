@@ -8,14 +8,16 @@ import {
   GET_ALL_POSTS,
   ADD_COMMENT,
   UPDATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  CREATE_POST
 } from '../actions/types';
 
 const initialState = {
   posts: [],
   post: {},
   error: { msg: null, status: null },
-  loading: false
+  loading: false,
+  createdPost: {}
 };
 
 export const Post = (state = initialState, action) => {
@@ -24,13 +26,15 @@ export const Post = (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload.posts,
-        loading: false
+        loading: false,
+        createdPost: {}
       };
     case GET_POST_BY_SLUG:
       return {
         ...state,
         post: action.payload.post,
-        loading: false
+        loading: false,
+        createdPost: {}
       };
     case POST_ERROR:
       return {
@@ -39,7 +43,8 @@ export const Post = (state = initialState, action) => {
         error: {
           msg: action.payload.msg,
           status: action.payload.status
-        }
+        },
+        createdPost: {}
       };
     case POST_LOADING:
       return {
@@ -49,7 +54,6 @@ export const Post = (state = initialState, action) => {
       };
 
     case ADD_COMMENT:
-      console.log(action.payload.comment);
       return {
         ...state,
         post: {
@@ -57,7 +61,8 @@ export const Post = (state = initialState, action) => {
           comments: [...state.post.comments, action.payload.comment],
           loading: false,
           error: { msg: null, status: null }
-        }
+        },
+        createdPost: {}
       };
     case UPDATE_COMMENT:
       const commentIndex = state.post.comments.findIndex(
@@ -73,7 +78,8 @@ export const Post = (state = initialState, action) => {
           ...state.post,
           comments: updatedComments,
           loading: false,
-          error: { msg: null, status: null }
+          error: { msg: null, status: null },
+          createdPost: {}
         }
       };
     case DELETE_COMMENT:
@@ -85,6 +91,14 @@ export const Post = (state = initialState, action) => {
           loading: false,
           error: { msg: null, status: null }
         }
+      };
+    case CREATE_POST:
+      return {
+        ...state,
+        loading: false,
+        error: { msg: null, status: null },
+        posts: [action.payload.post, ...state.posts],
+        createdPost: action.payload.post
       };
 
     default:

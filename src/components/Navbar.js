@@ -41,9 +41,11 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' to='/'>
-                Title 1
-              </Link>
+              {Auth.isAuthenticated && (
+                <Link className='nav-link' to='/create'>
+                  Write
+                </Link>
+              )}
             </li>
             <li className='nav-item'>
               <Link className='nav-link' to='/'>

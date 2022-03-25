@@ -15,6 +15,8 @@ export const POST_LOADING = 'POST_LOADING';
 export const GET_POST_BY_ID = 'GET_POST_BY_ID';
 export const GET_POST_BY_SLUG = 'GET_POST_BY_SLUG';
 export const GET_ALL_POSTS = 'GET_ALL_POSTS';
+export const CREATE_POST = 'CREATE_POST';
+
 // POST ENDS
 
 // POST COMMENT STARTS

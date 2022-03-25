@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUser());
-  }, [dispatch, User.isAuthenticated]);
+  }, [User.isAuthenticated]);
 
   return (
     <BrowserRouter>

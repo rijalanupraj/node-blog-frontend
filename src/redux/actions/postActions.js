@@ -1,6 +1,25 @@
 // Internal Import
-import { POST_ERROR, POST_LOADING, GET_POST_BY_ID, GET_POST_BY_SLUG, GET_ALL_POSTS } from './types';
+import {
+  POST_ERROR,
+  POST_LOADING,
+  GET_POST_BY_ID,
+  CREATE_POST,
+  GET_POST_BY_SLUG,
+  GET_ALL_POSTS
+} from './types';
 import API from '../../api/api';
+
+// GET User Token from the local storage
+const tokenConfig = () => {
+  const token = localStorage.getItem('user-token');
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  if (token) config.headers['Authorization'] = `Bearer ${token}`;
+  return config;
+};
 
 export const postLoading = () => {
   return { type: POST_LOADING };
@@ -14,7 +33,6 @@ export const getAllPosts = () => dispatch => {
       return res.data;
     })
     .then(data => {
-      console.log(data);
       dispatch({
         type: GET_ALL_POSTS,
         payload: {
@@ -49,6 +67,32 @@ export const getPostBySlug = slug => dispatch => {
       });
     })
     .catch(err => {
+      dispatch({
+        type: POST_ERROR,
+        payload: {
+          msg: err.response.data.message,
+          status: err.response.status
+        }
+      });
+    });
+};
+
+// Add New Post
+export const createPost = data => dispatch => {
+  dispatch({ type: POST_LOADING });
+
+  API.post(`/post`, data, {
+    headers: {
+      ...tokenConfig().headers,
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+    .then(res => res.data)
+    .then(data => {
+      dispatch({ type: CREATE_POST, payload: data });
+    })
+    .catch(err => {
+      console.log(err);
       dispatch({
         type: POST_ERROR,
         payload: {

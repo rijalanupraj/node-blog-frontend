@@ -8,6 +8,7 @@ import { MDBTextArea } from 'mdb-react-ui-kit';
 import { getPostBySlug } from '../redux/actions/postActions';
 import { addComment, updateComment, deleteComment } from '../redux/actions/commentActions';
 import NoProfilePhoto from '../assets/noProfilePic.jpg';
+import PostDescription from '../components/PostDescription';
 
 function SinglePost() {
   const { slug } = useParams();
@@ -118,7 +119,9 @@ function SinglePost() {
                 </div>
               </section>
 
-              <section>{Post.post.content}</section>
+              <section>
+                <PostDescription Post={Post.post} />
+              </section>
 
               <section className='text-center border-top border-bottom py-4 mb-4'>
                 <p>
