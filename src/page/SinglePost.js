@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { MDBTextArea } from 'mdb-react-ui-kit';
 import ReactTimeago from 'react-timeago';
+import { Link } from 'react-router-dom';
 
 // Internal Import
 import { getPostBySlug } from '../redux/actions/postActions';
@@ -82,43 +83,17 @@ function SinglePost() {
                       alt=''
                       loading='lazy'
                     />
-                    <span>
-                      {' '}
-                      Published {Post.post.createdAt && (
-                        <ReactTimeago date={Post.post.createdAt} />
-                      )}{' '}
-                      by
-                    </span>
-                    <a href='/' className='text-dark'>
+
+                    <Link to='/' className='text-dark'>
                       {` ${Post.post.author.username}`}
-                    </a>
+                    </Link>
                   </div>
 
                   <div className='col-lg-6 text-center text-lg-end'>
-                    <button
-                      type='button'
-                      className='btn btn-primary px-3 me-1'
-                      style={{ backgroundColor: '#3b5998' }}
-                    >
-                      <i className='fab fa-facebook-f'></i>
-                    </button>
-                    <button
-                      type='button'
-                      className='btn btn-primary px-3 me-1'
-                      style={{ backgroundColor: '#55acee' }}
-                    >
-                      <i className='fab fa-twitter'></i>
-                    </button>
-                    <button
-                      type='button'
-                      className='btn btn-primary px-3 me-1'
-                      style={{ backgroundColor: '#0082ca' }}
-                    >
-                      <i className='fab fa-linkedin'></i>
-                    </button>
-                    <button type='button' className='btn btn-primary px-3 me-1'>
-                      <i className='fas fa-comments'></i>
-                    </button>
+                    <span>
+                      {' '}
+                      {Post.post.createdAt && <ReactTimeago date={Post.post.createdAt} />}
+                    </span>
                   </div>
                 </div>
               </section>
@@ -126,37 +101,7 @@ function SinglePost() {
               <section>
                 <PostDescription Post={Post.post} />
               </section>
-
-              <section className='text-center border-top border-bottom py-4 mb-4'>
-                <p>
-                  <strong>Share with your friends:</strong>
-                </p>
-
-                <button
-                  type='button'
-                  className='btn btn-primary me-1'
-                  style={{ backgroundColor: '#3b5998' }}
-                >
-                  <i className='fab fa-facebook-f'></i>
-                </button>
-                <button
-                  type='button'
-                  className='btn btn-primary me-1'
-                  style={{ backgroundColor: '#55acee' }}
-                >
-                  <i className='fab fa-twitter'></i>
-                </button>
-                <button
-                  type='button'
-                  className='btn btn-primary me-1'
-                  style={{ backgroundColor: '#0082ca' }}
-                >
-                  <i className='fab fa-linkedin'></i>
-                </button>
-                <button type='button' className='btn btn-primary me-1'>
-                  <i className='fas fa-comments me-2'></i>Add comment
-                </button>
-              </section>
+              <hr />
 
               <section className='border-bottom mb-4 pb-4'>
                 <div className='row'>
@@ -185,11 +130,7 @@ function SinglePost() {
                     <a href='/' className='text-dark'>
                       <i className='fab fa-linkedin me-1'></i>
                     </a>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab
-                      iure inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur
-                      aut? Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
-                    </p>
+                    <p>User Bio</p>
                   </div>
                 </div>
               </section>

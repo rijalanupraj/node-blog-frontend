@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 // Internal Import
 import { Auth } from './authReducer';
 import { Post } from './postReducer';
+import { Profile } from './profileReducer';
 
 function lastAction(state = null, action) {
   return action.type;
@@ -13,6 +14,7 @@ function lastAction(state = null, action) {
 const reducers = combineReducers({
   Auth,
   Post,
+  Profile,
   lastAction
 });
 

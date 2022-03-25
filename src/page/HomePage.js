@@ -1,14 +1,23 @@
 // External Import
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Internal Import
 import BlogList from '../components/BlogList';
 import FeaturedBlog from '../components/FeaturedBlog';
+import { getAllPosts } from '../redux/actions/postActions';
 
 const HomePage = () => {
   const Auth = useSelector(state => state.Auth);
+  const Post = useSelector(state => state.Post);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
+
   return (
     <>
       {/* Jumbotron Starts */}
@@ -27,7 +36,7 @@ const HomePage = () => {
       <main className='my-5'>
         <div className='container'>
           <FeaturedBlog />
-          <BlogList />
+          <BlogList posts={Post.posts} />
         </div>
       </main>
     </>
