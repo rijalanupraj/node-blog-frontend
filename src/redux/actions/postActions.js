@@ -8,7 +8,8 @@ import {
   GET_ALL_POSTS,
   GET_TIMELINE_POSTS,
   GET_MY_POSTS,
-  DELETE_POST
+  DELETE_POST,
+  UPDATE_POST
 } from './types';
 import API from '../../api/api';
 
@@ -175,6 +176,38 @@ export const deletePost = postId => dispatch => {
       });
     })
     .catch(err => {
+      dispatch({
+        type: POST_ERROR,
+        payload: {
+          msg: err.response.data.message,
+          status: err.response.status
+        }
+      });
+    });
+};
+
+// Update Post
+export const updatePost = (postId, data) => dispatch => {
+  dispatch({ type: POST_LOADING });
+
+  API.put(`/post/${postId}`, data, {
+    headers: {
+      ...tokenConfig().headers,
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+    .then(res => res.data)
+    .then(data => {
+      dispatch({
+        type: UPDATE_POST,
+        payload: {
+          postId,
+          updatedPost: data.post
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
       dispatch({
         type: POST_ERROR,
         payload: {

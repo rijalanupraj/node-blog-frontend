@@ -48,8 +48,10 @@ function SinglePost() {
 
   if (Object.keys(Post.post).length === 0) {
     return (
-      <div className='spinner-grow text-primary' role='status'>
-        <span className='visually-hidden'>Loading...</span>
+      <div className='d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
+        <div className='spinner-grow text-primary' role='status'>
+          <span className='visually-hidden'>Loading...</span>
+        </div>
       </div>
     );
   }

@@ -6,7 +6,7 @@ import { MDBInput } from 'mdb-react-ui-kit';
 import { Navigate, useParams } from 'react-router-dom';
 
 // Internal Import
-import { createPost, getPostBySlug } from '../redux/actions/postActions';
+import { updatePost, getPostBySlug } from '../redux/actions/postActions';
 
 function UpdatePostPage() {
   const { slug } = useParams();
@@ -27,6 +27,11 @@ function UpdatePostPage() {
     dispatch(getPostBySlug(slug));
   }, [slug]);
 
+  useEffect(() => {
+    setContent(Post.post.content);
+    setTitle(Post.post.title);
+  }, [Post.post]);
+
   // This function will be triggered when the file field change
   const imageChange = e => {
     if (e.target.files && e.target.files.length > 0) {
@@ -46,23 +51,42 @@ function UpdatePostPage() {
     e.preventDefault();
     let formData = new FormData();
     const imageFile = document.querySelector(`input[type='file']`);
-    if (imageFile.files) {
+    if (selectedImage && imageFile.files) {
       for (let i = 0; i < imageFile.files.length; i++) {
         formData.append('image', imageFile.files[i]);
       }
     }
     formData.append('title', title);
     formData.append('content', content);
-    dispatch(createPost(formData));
+    dispatch(updatePost(Post.post._id, formData));
   };
 
-  if (Object.keys(Post.post).length === 0) {
-    return <div>Loading...</div>;
+  if (Object.keys(Post.post).length === 0 || Post.loading || Auth.loading) {
+    return (
+      <div className='d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
+        <div className='spinner-grow text-primary' role='status'>
+          <span className='visually-hidden'>Loading...</span>
+        </div>
+      </div>
+    );
   }
+
+  if (!Auth.isAuthenticated) {
+    return <Navigate to='/auth' />;
+  }
+
+  if (!Post.post) {
+    return <Navigate to='/' />;
+  }
+
+  if (Post.post.author._id !== Auth.user._id) {
+    return <Navigate to='/' />;
+  }
+
   return (
     <>
       <div id='intro' className='p-5 text-center bg-light'>
-        <h1 className='mb-0 h4'>Create Your Own Post</h1>
+        <h1 className='mb-0 h4'>Update Post</h1>
       </div>
       <main className='mt-4 mb-5'>
         <div className='container'>
@@ -89,7 +113,6 @@ function UpdatePostPage() {
                     type='file'
                     accept='image/png , image/jpeg, image/jpg'
                     onChange={e => imageChange(e)}
-                    required
                   />
                   {selectedImage ? (
                     <div className='my-5 text-center'>
@@ -121,7 +144,7 @@ function UpdatePostPage() {
                   />
                 </div>
                 <div className='text-center mt-5'>
-                  <button className='btn btn-primary'>Create Post</button>
+                  <button className='btn btn-primary'>Update Post</button>
                   {Post.loading && (
                     <div className='text-center'>
                       <div class='spinner-grow' role='status'>
@@ -132,10 +155,10 @@ function UpdatePostPage() {
                   )}
                   <section className='mt-1'>
                     {Post.error.msg !== null && <p classNameName='text-danger'>{Post.error.msg}</p>}
-                    {Object.keys(Post.createdPost).length > 1 && (
+                    {Object.keys(Post.updatedPost).length > 1 && (
                       <>
-                        <p className='text-success'>Post Created Successfully.</p>
-                        <Navigate to={`/post/${Post.createdPost.slug}`} />
+                        <p className='text-success'>Post Updated Successfully.</p>
+                        <Navigate to={`/post/${Post.updatedPost.slug}`} />
                       </>
                     )}
                   </section>

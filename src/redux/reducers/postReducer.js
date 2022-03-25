@@ -12,7 +12,8 @@ import {
   CREATE_POST,
   GET_TIMELINE_POSTS,
   GET_MY_POSTS,
-  DELETE_POST
+  DELETE_POST,
+  UPDATE_POST
 } from '../actions/types';
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
   error: { msg: null, status: null },
   loading: false,
   createdPost: {},
+  updatedPost: {},
   timelinePosts: [],
   myPosts: []
 };
@@ -32,14 +34,16 @@ export const Post = (state = initialState, action) => {
         ...state,
         posts: action.payload.posts,
         loading: false,
-        createdPost: {}
+        createdPost: {},
+        updatedPost: {}
       };
     case GET_POST_BY_SLUG:
       return {
         ...state,
         post: action.payload.post,
         loading: false,
-        createdPost: {}
+        createdPost: {},
+        updatedPost: {}
       };
     case POST_ERROR:
       return {
@@ -49,7 +53,8 @@ export const Post = (state = initialState, action) => {
           msg: action.payload.msg,
           status: action.payload.status
         },
-        createdPost: {}
+        createdPost: {},
+        updatedPost: {}
       };
     case POST_LOADING:
       return {
@@ -67,7 +72,8 @@ export const Post = (state = initialState, action) => {
           loading: false,
           error: { msg: null, status: null }
         },
-        createdPost: {}
+        createdPost: {},
+        updatedPost: {}
       };
     case UPDATE_COMMENT:
       const commentIndex = state.post.comments.findIndex(
@@ -84,7 +90,8 @@ export const Post = (state = initialState, action) => {
           comments: updatedComments,
           loading: false,
           error: { msg: null, status: null },
-          createdPost: {}
+          createdPost: {},
+          updatedPost: {}
         }
       };
     case DELETE_COMMENT:
@@ -103,21 +110,24 @@ export const Post = (state = initialState, action) => {
         loading: false,
         error: { msg: null, status: null },
         posts: [action.payload.post, ...state.posts],
-        createdPost: action.payload.post
+        createdPost: action.payload.post,
+        updatedPost: {}
       };
     case GET_TIMELINE_POSTS:
       return {
         ...state,
         loading: false,
         error: { msg: null, status: null },
-        timelinePosts: action.payload.posts || []
+        timelinePosts: action.payload.posts || [],
+        updatedPost: {}
       };
     case GET_MY_POSTS:
       return {
         ...state,
         loading: false,
         error: { msg: null, status: null },
-        myPosts: action.payload.posts || []
+        myPosts: action.payload.posts || [],
+        updatedPost: {}
       };
     case DELETE_POST:
       return {
@@ -125,6 +135,20 @@ export const Post = (state = initialState, action) => {
         loading: false,
         error: { msg: null, status: null },
         myPosts: state.myPosts.filter(post => post._id !== action.payload.postId)
+      };
+    case UPDATE_POST:
+      const postIndex = state.myPosts.findIndex(post => post._id === action.payload.postId);
+
+      const updatedPosts = [...state.myPosts];
+
+      updatedPosts[postIndex] = action.payload.updatedPost;
+
+      return {
+        ...state,
+        loading: false,
+        error: { msg: null, status: null },
+        myPosts: updatedPosts,
+        updatedPost: action.payload.updatedPost
       };
 
     default:

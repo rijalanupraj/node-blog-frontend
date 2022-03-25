@@ -17,6 +17,7 @@ import Timeline from './page/Timeline';
 import AllPostPage from './page/AllPostPage';
 import UpdatePostPage from './page/UpdatePostPage';
 import MyProfilePage from './page/MyProfilePage';
+import NotFoundPage from './page/NotFoundPage';
 
 const MyRoutes = () => {
   const User = useSelector(state => state.Auth);
@@ -32,15 +33,12 @@ const MyRoutes = () => {
       <Route exact path='/create' element={<PrivateRoute auth={User.isAuthenticated} />}>
         <Route exact path='/create' element={<CreatePost />} />
       </Route>
-      <Route exact path='/post/:slug/update' element={<PrivateRoute auth={User.isAuthenticated} />}>
-        <Route exact path='/post/:slug/update' element={<UpdatePostPage />} />
-      </Route>
-      <Route exact path='/my' element={<PrivateRoute auth={User.isAuthenticated} />}>
-        <Route exact path='/my' element={<MyProfilePage />} />
-      </Route>
+      <Route exact path='/post/:slug/update' element={<UpdatePostPage />} />
+      <Route exact path='/my' element={<MyProfilePage />} />
       <Route exact path='/timeline' element={<PrivateRoute auth={User.isAuthenticated} />}>
         <Route exact path='/timeline' element={<Timeline />} />
       </Route>
+      <Route exact path='*' element={<NotFoundPage />} />
     </Routes>
   );
 };

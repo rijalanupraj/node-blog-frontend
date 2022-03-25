@@ -1,11 +1,10 @@
 // External Import
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 // Internal Import
 import NoProfilePic from '../assets/noProfilePic.jpg';
-import BlogList from '../components/BlogList';
 import MyBlogList from '../components/MyBlogList';
 import { getMyPosts } from '../redux/actions/postActions';
 
@@ -17,6 +16,18 @@ function MyProfilePage() {
   useEffect(() => {
     dispatch(getMyPosts());
   }, []);
+
+  if (Auth.loading || Post.loading) {
+    return (
+      <div className='d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
+        <div className='spinner-grow text-primary' role='status'>
+          <span className='visually-hidden'>Loading...</span>
+        </div>
+      </div>
+    );
+  } else if (!Auth.isAuthenticated) {
+    return <Navigate to='/auth' />;
+  }
 
   return (
     <section style={{ backgroundColor: '#eee' }}>
@@ -42,6 +53,7 @@ function MyProfilePage() {
           <div className='col-lg-8'>
             <div className='card mb-4'>
               <div className='card-body'>
+                <h3>My Posts</h3>
                 <MyBlogList posts={Post.myPosts} />
               </div>
             </div>

@@ -31,11 +31,13 @@ function MyBlogCard({ post }) {
           </div>
 
           <div className='col-6 text-end'>
-            <i
-              className='fas fa-pen pe-2 text-info'
-              style={{ cursor: 'pointer' }}
-              onClick={() => {}}
-            ></i>
+            <Link to={`/post/${post.slug}/update`}>
+              <i
+                className='fas fa-pen pe-2 text-info'
+                style={{ cursor: 'pointer' }}
+                onClick={() => {}}
+              ></i>
+            </Link>
             <i
               className='fas fa-trash text-danger'
               style={{ cursor: 'pointer' }}
