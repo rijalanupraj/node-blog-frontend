@@ -6,13 +6,19 @@ import { MDBTextArea } from 'mdb-react-ui-kit';
 
 // Internal Import
 import { getPostBySlug } from '../redux/actions/postActions';
-import { addComment } from '../redux/actions/commentActions';
+import { addComment, updateComment, deleteComment } from '../redux/actions/commentActions';
 import NoProfilePhoto from '../assets/noProfilePic.jpg';
 
 function SinglePost() {
   const { slug } = useParams();
   const [commentText, setCommentText] = useState('');
   const Post = useSelector(state => state.Post);
+  const Auth = useSelector(state => state.Auth);
+  const [isCommentEdit, setIsCommentEdit] = useState({
+    isEdit: false,
+    commentId: null,
+    commentText: null
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,42 +27,55 @@ function SinglePost() {
 
   const handleCommentSubmit = e => {
     e.preventDefault();
-    dispatch(addComment(commentText, Post.post._id));
+    dispatch(addComment(Post.post._id, commentText));
+    setCommentText('');
+  };
+
+  const editComment = commentId => {
+    dispatch(updateComment(commentId, isCommentEdit.commentText));
+    setIsCommentEdit({
+      isEdit: false,
+      commentId: null,
+      commentText: null
+    });
+  };
+  const removeComment = commentId => {
+    dispatch(deleteComment(Post.post._id, commentId));
   };
 
   if (Object.keys(Post.post).length === 0) {
     return (
-      <div class='spinner-grow text-primary' role='status'>
-        <span class='visually-hidden'>Loading...</span>
+      <div className='spinner-grow text-primary' role='status'>
+        <span className='visually-hidden'>Loading...</span>
       </div>
     );
   }
 
   return (
     <>
-      <div id='intro' class='p-5 text-center bg-light'>
-        <h1 class='mb-0 h4'>{Post.post.title}</h1>
+      <div id='intro' className='p-5 text-center bg-light'>
+        <h1 className='mb-0 h4'>{Post.post.title}</h1>
       </div>
-      <main class='mt-4 mb-5'>
-        <div class='container'>
-          <div class='row'>
-            <div class='mx-auto col-md-8 mb-4'>
-              <section class='border-bottom mb-4'>
+      <main className='mt-4 mb-5'>
+        <div className='container'>
+          <div className='row'>
+            <div className='mx-auto col-md-8 mb-4'>
+              <section className='border-bottom mb-4'>
                 <img
                   src={Post.post.image.url}
-                  class='img-fluid shadow-2-strong rounded-5 mb-4'
+                  className='img-fluid shadow-2-strong rounded-5 mb-4'
                   alt=''
                 />
 
-                <div class='row align-items-center mb-4'>
-                  <div class='col-lg-6 text-center text-lg-start mb-3 m-lg-0'>
+                <div className='row align-items-center mb-4'>
+                  <div className='col-lg-6 text-center text-lg-start mb-3 m-lg-0'>
                     <img
                       src={
                         Post.post.author.profilePhoto.hasPhoto
                           ? Post.post.author.profilePhoto.url
                           : NoProfilePhoto
                       }
-                      class='rounded-5 shadow-1-strong me-2'
+                      className='rounded-5 shadow-1-strong me-2'
                       height='35'
                       alt=''
                       loading='lazy'
@@ -65,35 +84,35 @@ function SinglePost() {
                       {' '}
                       Published <u>{new Date(Post.post.createdAt).toDateString()}</u> by
                     </span>
-                    <a href='/' class='text-dark'>
+                    <a href='/' className='text-dark'>
                       {` ${Post.post.author.username}`}
                     </a>
                   </div>
 
-                  <div class='col-lg-6 text-center text-lg-end'>
+                  <div className='col-lg-6 text-center text-lg-end'>
                     <button
                       type='button'
-                      class='btn btn-primary px-3 me-1'
+                      className='btn btn-primary px-3 me-1'
                       style={{ backgroundColor: '#3b5998' }}
                     >
-                      <i class='fab fa-facebook-f'></i>
+                      <i className='fab fa-facebook-f'></i>
                     </button>
                     <button
                       type='button'
-                      class='btn btn-primary px-3 me-1'
+                      className='btn btn-primary px-3 me-1'
                       style={{ backgroundColor: '#55acee' }}
                     >
-                      <i class='fab fa-twitter'></i>
+                      <i className='fab fa-twitter'></i>
                     </button>
                     <button
                       type='button'
-                      class='btn btn-primary px-3 me-1'
+                      className='btn btn-primary px-3 me-1'
                       style={{ backgroundColor: '#0082ca' }}
                     >
-                      <i class='fab fa-linkedin'></i>
+                      <i className='fab fa-linkedin'></i>
                     </button>
-                    <button type='button' class='btn btn-primary px-3 me-1'>
-                      <i class='fas fa-comments'></i>
+                    <button type='button' className='btn btn-primary px-3 me-1'>
+                      <i className='fas fa-comments'></i>
                     </button>
                   </div>
                 </div>
@@ -101,63 +120,63 @@ function SinglePost() {
 
               <section>{Post.post.content}</section>
 
-              <section class='text-center border-top border-bottom py-4 mb-4'>
+              <section className='text-center border-top border-bottom py-4 mb-4'>
                 <p>
                   <strong>Share with your friends:</strong>
                 </p>
 
                 <button
                   type='button'
-                  class='btn btn-primary me-1'
+                  className='btn btn-primary me-1'
                   style={{ backgroundColor: '#3b5998' }}
                 >
-                  <i class='fab fa-facebook-f'></i>
+                  <i className='fab fa-facebook-f'></i>
                 </button>
                 <button
                   type='button'
-                  class='btn btn-primary me-1'
+                  className='btn btn-primary me-1'
                   style={{ backgroundColor: '#55acee' }}
                 >
-                  <i class='fab fa-twitter'></i>
+                  <i className='fab fa-twitter'></i>
                 </button>
                 <button
                   type='button'
-                  class='btn btn-primary me-1'
+                  className='btn btn-primary me-1'
                   style={{ backgroundColor: '#0082ca' }}
                 >
-                  <i class='fab fa-linkedin'></i>
+                  <i className='fab fa-linkedin'></i>
                 </button>
-                <button type='button' class='btn btn-primary me-1'>
-                  <i class='fas fa-comments me-2'></i>Add comment
+                <button type='button' className='btn btn-primary me-1'>
+                  <i className='fas fa-comments me-2'></i>Add comment
                 </button>
               </section>
 
-              <section class='border-bottom mb-4 pb-4'>
-                <div class='row'>
-                  <div class='col-3'>
+              <section className='border-bottom mb-4 pb-4'>
+                <div className='row'>
+                  <div className='col-3'>
                     <img
                       src={
                         Post.post.author.profilePhoto.hasPhoto
                           ? Post.post.author.profilePhoto.url
                           : NoProfilePhoto
                       }
-                      class='img-fluid shadow-1-strong rounded-5'
+                      className='img-fluid shadow-1-strong rounded-5'
                       alt=''
                     />
                   </div>
 
-                  <div class='col-9'>
-                    <p class='mb-2'>
+                  <div className='col-9'>
+                    <p className='mb-2'>
                       <strong>{Post.post.author.username}</strong>
                     </p>
-                    <a href='/' class='text-dark'>
-                      <i class='fab fa-facebook-f me-1'></i>
+                    <a href='/' className='text-dark'>
+                      <i className='fab fa-facebook-f me-1'></i>
                     </a>
-                    <a href='/' class='text-dark'>
-                      <i class='fab fa-twitter me-1'></i>
+                    <a href='/' className='text-dark'>
+                      <i className='fab fa-twitter me-1'></i>
                     </a>
-                    <a href='/' class='text-dark'>
-                      <i class='fab fa-linkedin me-1'></i>
+                    <a href='/' className='text-dark'>
+                      <i className='fab fa-linkedin me-1'></i>
                     </a>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab
@@ -168,27 +187,96 @@ function SinglePost() {
                 </div>
               </section>
 
-              <section class='border-bottom mb-3'>
-                <p class='text-center'>
+              <section className='border-bottom mb-3'>
+                <p className='text-center'>
                   <strong>Comments: {Post.post.comments.length}</strong>
                 </p>
 
                 {Post.post.comments.map(comment => {
                   return (
-                    <div class='row mb-4'>
-                      <div class='col-2'>
+                    <div key={comment._id} className='row mb-4'>
+                      <div className='col-2'>
                         <img
-                          src='https://mdbootstrap.com/img/Photos/Avatars/img%20(24).jpg'
-                          class='img-fluid shadow-1-strong rounded-5'
+                          src={
+                            comment.author.profilePhoto.hasPhoto
+                              ? comment.author.profilePhoto.url
+                              : NoProfilePhoto
+                          }
+                          className='img-fluid shadow-1-strong rounded-5'
                           alt=''
                         />
                       </div>
 
-                      <div class='col-10'>
-                        <p class='mb-2'>
-                          <strong>Marta Dolores</strong>
+                      <div className='col-10 position-relative'>
+                        {Auth.isAuthenticated && comment.author._id === Auth.user._id && (
+                          <div class='position-absolute top-0 end-0'>
+                            <i
+                              className='fas fa-pen pe-2 text-info'
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => {
+                                setIsCommentEdit({
+                                  isCommentEdit: true,
+                                  commentId: comment._id,
+                                  commentText: comment.text
+                                });
+                              }}
+                            ></i>
+                            <i
+                              className='fas fa-trash text-danger'
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => {
+                                removeComment(comment._id);
+                              }}
+                            ></i>
+                          </div>
+                        )}
+                        <p className='mb-2'>
+                          <strong>{comment.author.username}</strong>
                         </p>
-                        <p>{comment.text}</p>
+                        <span className='text-muted small'>
+                          {new Date(comment.createdAt).toDateString()}
+                        </span>
+                        {isCommentEdit.commentId === comment._id ? (
+                          <form onSubmit={e => e.preventDefault()}>
+                            <div className='form-outline mb-4'>
+                              <MDBTextArea
+                                label='Your Comment'
+                                id='textAreaExample'
+                                rows={2}
+                                value={isCommentEdit.commentText}
+                                onChange={e =>
+                                  setIsCommentEdit({
+                                    ...isCommentEdit,
+                                    commentText: e.target.value
+                                  })
+                                }
+                              />
+                            </div>
+                            <div className='row justify-content-evenly'>
+                              <button
+                                type='submit'
+                                className='col-4 btn btn-primary mb-4'
+                                onClick={() => editComment(comment._id)}
+                              >
+                                Update
+                              </button>
+                              <button
+                                className='col-4 btn btn-info mb-4'
+                                onClick={() =>
+                                  setIsCommentEdit({
+                                    isCommentEdit: false,
+                                    commentId: '',
+                                    commentText: ''
+                                  })
+                                }
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </form>
+                        ) : (
+                          <p>{comment.text}</p>
+                        )}
                       </div>
                     </div>
                   );
@@ -196,12 +284,12 @@ function SinglePost() {
               </section>
 
               <section>
-                <p class='text-center'>
+                <p className='text-center'>
                   <strong>Leave a reply</strong>
                 </p>
 
                 <form onSubmit={e => handleCommentSubmit(e)}>
-                  <div class='form-outline mb-4'>
+                  <div className='form-outline mb-4'>
                     <MDBTextArea
                       label='Your Comment'
                       id='textAreaExample'
@@ -211,7 +299,7 @@ function SinglePost() {
                     />
                   </div>
 
-                  <button type='submit' class='btn btn-primary btn-block mb-4'>
+                  <button type='submit' className='btn btn-primary btn-block mb-4'>
                     Publish
                   </button>
                 </form>
