@@ -1,5 +1,14 @@
 // Internal Import
-import { GET_USER, USER_LOGIN, REGISTER_USER, LOGOUT_USER, LOADING, AUTH_ERROR } from './types';
+import {
+  GET_USER,
+  USER_LOGIN,
+  REGISTER_USER,
+  LOGOUT_USER,
+  LOADING,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
+  AUTH_ERROR
+} from './types';
 import API from '../../api/api';
 
 // Loading
@@ -79,4 +88,42 @@ export const registerUser = registerData => dispatch => {
 // Logout User
 export const logoutUser = () => dispatch => {
   dispatch({ type: LOGOUT_USER });
+};
+
+// Follow User
+export const followUser = userId => dispatch => {
+  dispatch({ type: LOADING });
+  API.put(`/user/${userId}/follow`, {}, tokenConfig())
+    .then(res => res.data)
+    .then(data => {
+      dispatch({ type: FOLLOW_USER, payload: { userId } });
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: {
+          msg: err.response.data.message,
+          status: err.response.status
+        }
+      });
+    });
+};
+
+// UnFollow User
+export const unFollowUser = userId => dispatch => {
+  dispatch({ type: LOADING });
+  API.put(`/user/${userId}/unfollow`, {}, tokenConfig())
+    .then(res => res.data)
+    .then(data => {
+      dispatch({ type: UNFOLLOW_USER, payload: { userId: userId } });
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: {
+          msg: err.response.data.message,
+          status: err.response.status
+        }
+      });
+    });
 };

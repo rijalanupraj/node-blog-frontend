@@ -5,7 +5,9 @@ import {
   REGISTER_USER,
   LOGOUT_USER,
   LOADING,
-  AUTH_ERROR
+  AUTH_ERROR,
+  FOLLOW_USER,
+  UNFOLLOW_USER
 } from '../actions/types';
 
 const initialState = {
@@ -69,6 +71,37 @@ export const Auth = (state = initialState, action) => {
       };
     case LOADING:
       return { ...state, loading: true };
+
+    case FOLLOW_USER:
+      return {
+        ...state,
+        token: action.payload,
+        isAuthenticated: true,
+        user: {
+          ...state.user,
+          followings: [...state.user.followings, action.payload.userId]
+        },
+        loading: false,
+        error: {
+          msg: null,
+          status: null
+        }
+      };
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        token: action.payload,
+        isAuthenticated: true,
+        user: {
+          ...state.user,
+          followings: state.user.followings.filter(userId => userId !== action.payload.userId)
+        },
+        loading: false,
+        error: {
+          msg: null,
+          status: null
+        }
+      };
 
     default:
       return state;
