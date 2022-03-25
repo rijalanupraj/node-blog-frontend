@@ -2,6 +2,8 @@
 import axios from 'axios';
 
 export default axios.create({
-  // baseURL: 'http://localhost:8000/api/v1'
-  baseURL: 'https://my-node-blog-app.herokuapp.com/api/v1/'
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:8000/api/v1'
+      : 'https://my-node-blog-app.herokuapp.com/api/v1'
 });

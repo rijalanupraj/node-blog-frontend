@@ -1,5 +1,5 @@
 // External Import
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import JoditEditor from 'jodit-react';
 import { MDBInput } from 'mdb-react-ui-kit';
@@ -9,7 +9,6 @@ import { Navigate } from 'react-router-dom';
 import { createPost } from '../redux/actions/postActions';
 
 function CreatePost() {
-  const Auth = useSelector(state => state.Auth);
   const Post = useSelector(state => state.Post);
   const editor = useRef(null);
   const [content, setContent] = useState('');

@@ -11,13 +11,13 @@ function Footer() {
           <a href='##' className='me-4 text-reset'>
             <i className='fab fa-facebook-f'></i>
           </a>
-          <a href='##' className='me-4 text-reset'>
+          <a href='https://www.twitter.com/rijalanupraj' className='me-4 text-reset'>
             <i className='fab fa-twitter'></i>
           </a>
-          <a href='##' className='me-4 text-reset'>
+          <a href='https://www.instagram.com/rijalanupraj' className='me-4 text-reset'>
             <i className='fab fa-instagram'></i>
           </a>
-          <a href='##' className='me-4 text-reset'>
+          <a href='https://www.linkedin.com/in/rijalanupraj/' className='me-4 text-reset'>
             <i className='fab fa-linkedin'></i>
           </a>
           <a href='https://github.com/rijalanupraj' className='me-4 text-reset'>

@@ -1,7 +1,7 @@
 // External Import
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // Internal Import
 import Navbar from './components/Navbar';
@@ -11,11 +11,10 @@ import { getUser } from './redux/actions/authActions';
 
 function App() {
   const dispatch = useDispatch();
-  const User = useSelector(state => state.Auth);
 
   useEffect(() => {
     dispatch(getUser());
-  }, [User.isAuthenticated]);
+  }, []);
 
   return (
     <BrowserRouter>

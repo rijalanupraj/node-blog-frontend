@@ -99,11 +99,6 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className='dropdown-item' to='/'>
-                    Settings
-                  </Link>
-                </li>
-                <li>
                   <span className='dropdown-item' onClick={handleLogout}>
                     Logout
                   </span>
