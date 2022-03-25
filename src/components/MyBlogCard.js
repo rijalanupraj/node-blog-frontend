@@ -1,12 +1,17 @@
 // External Import
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactTimeago from 'react-timeago';
+import { useDispatch } from 'react-redux';
 
 // Internal Import
-import NoProfilePic from '../assets/noProfilePic.jpg';
+import { deletePost } from '../redux/actions/postActions';
 
-function BlogCard({ post }) {
+function MyBlogCard({ post }) {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deletePost(post._id));
+  };
+
   return (
     <div className='col-lg-4 col-md-12 mb-4 mb-lg-0'>
       <div>
@@ -22,22 +27,22 @@ function BlogCard({ post }) {
 
         <div className='row mb-3'>
           <div className='col-6'>
-            <Link to={`/profile/${post.author.username}`} className='text-info'>
-              <img
-                src={
-                  post.author.profilePhoto.hasPhoto ? post.author.profilePhoto.url : NoProfilePic
-                }
-                className='rounded-circle border'
-                width='30'
-                height='30'
-                alt=''
-              />
-              {` ${post.author.username}`}
-            </Link>
+            <span>{post.createdAt && <ReactTimeago date={post.createdAt} />}</span>
           </div>
 
           <div className='col-6 text-end'>
-            <span>{post.createdAt && <ReactTimeago date={post.createdAt} />}</span>
+            <i
+              className='fas fa-pen pe-2 text-info'
+              style={{ cursor: 'pointer' }}
+              onClick={() => {}}
+            ></i>
+            <i
+              className='fas fa-trash text-danger'
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                handleDelete();
+              }}
+            ></i>
           </div>
         </div>
 
@@ -51,4 +56,4 @@ function BlogCard({ post }) {
   );
 }
 
-export default BlogCard;
+export default MyBlogCard;

@@ -6,7 +6,9 @@ import {
   CREATE_POST,
   GET_POST_BY_SLUG,
   GET_ALL_POSTS,
-  GET_TIMELINE_POSTS
+  GET_TIMELINE_POSTS,
+  GET_MY_POSTS,
+  DELETE_POST
 } from './types';
 import API from '../../api/api';
 
@@ -116,6 +118,59 @@ export const getTimelinePosts = () => dispatch => {
         type: GET_TIMELINE_POSTS,
         payload: {
           posts: data.posts[0]
+        }
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: POST_ERROR,
+        payload: {
+          msg: err.response.data.message,
+          status: err.response.status
+        }
+      });
+    });
+};
+
+export const getMyPosts = () => dispatch => {
+  dispatch({ type: POST_LOADING });
+
+  API.get(`/post/user/my`, tokenConfig())
+    .then(res => {
+      return res.data;
+    })
+    .then(data => {
+      dispatch({
+        type: GET_MY_POSTS,
+        payload: {
+          posts: data.posts
+        }
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: POST_ERROR,
+        payload: {
+          msg: err.response.data.message,
+          status: err.response.status
+        }
+      });
+    });
+};
+
+// Delete Post
+export const deletePost = postId => dispatch => {
+  dispatch({ type: POST_LOADING });
+
+  API.delete(`/post/${postId}`, tokenConfig())
+    .then(res => {
+      return res.data;
+    })
+    .then(data => {
+      dispatch({
+        type: DELETE_POST,
+        payload: {
+          postId
         }
       });
     })
