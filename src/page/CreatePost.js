@@ -15,10 +15,26 @@ function CreatePost() {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const dispatch = useDispatch();
+  const [selectedImage, setSelectedImage] = useState();
   const config = {
     readonly: false,
     placeholder: 'Write Content here',
     askBeforePasteHTML: false
+  };
+
+  // This function will be triggered when the file field change
+  const imageChange = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    } else {
+      removeSelectedImage();
+    }
+  };
+
+  const removeSelectedImage = () => {
+    const imageFile = document.querySelector(`input[type='file']`);
+    imageFile.value = '';
+    setSelectedImage();
   };
 
   const handleSubmit = e => {
@@ -63,8 +79,22 @@ function CreatePost() {
                     className='form-control form-control-lg'
                     id='formFileLg'
                     type='file'
+                    accept='image/png , image/jpeg, image/jpg'
+                    onChange={e => imageChange(e)}
                     required
                   />
+                  {selectedImage && (
+                    <div className='my-5 text-center'>
+                      <img
+                        className='img-fluid img-thumbnail'
+                        src={URL.createObjectURL(selectedImage)}
+                        alt='Thumb'
+                      />
+                      <span className='btn btn-info mt-2' onClick={removeSelectedImage}>
+                        Remove This Image
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className='mt-3'>
                   <JoditEditor

@@ -1,6 +1,7 @@
 // External Import
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ReactTimeago from 'react-timeago';
 
 function BlogCard({ post }) {
   return (
@@ -10,29 +11,26 @@ function BlogCard({ post }) {
           className='bg-image hover-overlay shadow-1-strong ripple rounded-5 mb-4'
           data-mdb-ripple-color='light'
         >
-          <img src={post.image.url} className='img-fluid' alt='' />
-          <a href='#!'>
+          <Link to={`post/${post.slug}`}>
+            <img src={post.image.url} className='img-fluid ' alt='' />
             <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-          </a>
+          </Link>
         </div>
 
         <div className='row mb-3'>
           <div className='col-6'>
-            <a href='/' className='text-info'>
-              <i className='fas fa-plane'></i>
-              Travels
-            </a>
+            <Link to='/' className='text-info'>
+              <i className='fas fa-user'></i> {post.author.username}
+            </Link>
           </div>
 
           <div className='col-6 text-end'>
-            <u> 15.07.2020</u>
+            <span>{post.createdAt && <ReactTimeago date={post.createdAt} />}</span>
           </div>
         </div>
 
         <Link to={`post/${post.slug}`} className='text-dark'>
           <h5>{post.title}</h5>
-
-          <p>{post.content.slice(0, 10)}</p>
         </Link>
 
         <hr />

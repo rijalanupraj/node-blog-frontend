@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { MDBTextArea } from 'mdb-react-ui-kit';
+import ReactTimeago from 'react-timeago';
 
 // Internal Import
 import { getPostBySlug } from '../redux/actions/postActions';
@@ -83,7 +84,10 @@ function SinglePost() {
                     />
                     <span>
                       {' '}
-                      Published <u>{new Date(Post.post.createdAt).toDateString()}</u> by
+                      Published {Post.post.createdAt && (
+                        <ReactTimeago date={Post.post.createdAt} />
+                      )}{' '}
+                      by
                     </span>
                     <a href='/' className='text-dark'>
                       {` ${Post.post.author.username}`}
@@ -237,7 +241,7 @@ function SinglePost() {
                           <strong>{comment.author.username}</strong>
                         </p>
                         <span className='text-muted small'>
-                          {new Date(comment.createdAt).toDateString()}
+                          {comment.updatedAt && <ReactTimeago date={comment.updatedAt} />}
                         </span>
                         {isCommentEdit.commentId === comment._id ? (
                           <form onSubmit={e => e.preventDefault()}>
