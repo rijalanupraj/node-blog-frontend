@@ -238,21 +238,33 @@ function SinglePost() {
                   <strong>Leave a reply</strong>
                 </p>
 
-                <form onSubmit={e => handleCommentSubmit(e)}>
-                  <div className='form-outline mb-4'>
-                    <MDBTextArea
-                      label='Your Comment'
-                      id='textAreaExample'
-                      rows={2}
-                      value={commentText}
-                      onChange={e => setCommentText(e.target.value)}
-                    />
-                  </div>
+                {Auth.isAuthenticated ? (
+                  <form onSubmit={e => handleCommentSubmit(e)}>
+                    <div className='form-outline mb-4'>
+                      <MDBTextArea
+                        label='Your Comment'
+                        id='textAreaExample'
+                        rows={2}
+                        value={commentText}
+                        onChange={e => setCommentText(e.target.value)}
+                      />
+                    </div>
 
-                  <button type='submit' className='btn btn-primary btn-block mb-4'>
-                    Publish
-                  </button>
-                </form>
+                    <button type='submit' className='btn btn-primary btn-block mb-4'>
+                      Publish
+                    </button>
+                  </form>
+                ) : (
+                  <div className='row justify-content-center'>
+                    <div className='col-12'>
+                      <p className='text-center'>
+                        <strong>
+                          Please <Link to='/auth'>Login</Link> to leave a comment
+                        </strong>
+                      </p>
+                    </div>
+                  </div>
+                )}
               </section>
             </div>
           </div>
