@@ -68,7 +68,14 @@ function SinglePost() {
               <section className='border-bottom mb-4'>
                 <img
                   src={Post.post.image.url}
-                  className='img-fluid shadow-2-strong rounded-5 mb-4'
+                  className='shadow-2-strong rounded-5 mb-4'
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '500px',
+                    objectFit: 'cover',
+                    objectPosition: 'top center'
+                  }}
                   alt=''
                 />
 

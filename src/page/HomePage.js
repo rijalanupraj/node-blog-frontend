@@ -18,6 +18,11 @@ const HomePage = () => {
     dispatch(getAllPosts());
   }, []);
 
+  // Get Most Commented Post
+  const mostCommentedPost = Post.posts.sort((a, b) => {
+    return b.comments.length - a.comments.length;
+  });
+
   return (
     <>
       {/* Jumbotron Starts */}
@@ -35,8 +40,21 @@ const HomePage = () => {
       {/* Jumbotron Ends */}
       <main className='my-5'>
         <div className='container'>
-          <FeaturedBlog />
-          <BlogList posts={Post.posts} />
+          <span
+            className='badge bg-danger px-2 py-1 shadow-1-strong mb-3'
+            style={{ fontSize: '30px' }}
+          >
+            Popular
+          </span>
+          <BlogList posts={mostCommentedPost.slice(0, 6)} />
+          <p className='my-5' />
+          <span
+            className='badge bg-danger px-2 py-1 shadow-1-strong mb-3'
+            style={{ fontSize: '30px' }}
+          >
+            New
+          </span>
+          <BlogList posts={Post.posts.slice(0, 6)} />
         </div>
       </main>
     </>

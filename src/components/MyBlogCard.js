@@ -20,7 +20,16 @@ function MyBlogCard({ post }) {
           data-mdb-ripple-color='light'
         >
           <Link to={`/post/${post.slug}`}>
-            <img src={post.image.url} className='img-fluid ' alt='' />
+            <img
+              src={post.image.url}
+              style={{
+                height: '200px',
+                width: '100%',
+                objectFit: 'cover',
+                objectPosition: 'top center'
+              }}
+              alt=''
+            />
             <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
           </Link>
         </div>
