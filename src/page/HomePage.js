@@ -19,9 +19,13 @@ const HomePage = () => {
   }, []);
 
   // Get Most Commented Post
-  const mostCommentedPost = Post.posts.sort((a, b) => {
-    return b.comments.length - a.comments.length;
-  });
+  const mostCommentedPost = () => {
+    return Post.posts
+      .sort((a, b) => {
+        return b.comments.length - a.comments.length;
+      })
+      .slice(0, 6);
+  };
 
   return (
     <>
@@ -46,7 +50,15 @@ const HomePage = () => {
           >
             Popular
           </span>
-          <BlogList posts={mostCommentedPost.slice(0, 6)} />
+          {Post.loading && (
+            <div className='d-flex justify-content-center'>
+              <div className='spinner-border text-primary' role='status'>
+                <span className='sr-only'>Loading...</span>
+              </div>
+            </div>
+          )}
+          {Post.posts.length > 0 && <BlogList posts={mostCommentedPost()} />}
+          {Post.post.length === 0 && <h1 className='text-center'>No Post Found</h1>}
           <p className='my-5' />
           <span
             className='badge bg-danger px-2 py-1 shadow-1-strong mb-3'
@@ -54,7 +66,15 @@ const HomePage = () => {
           >
             New
           </span>
-          <BlogList posts={Post.posts.slice(0, 6)} />
+          {Post.loading && (
+            <div className='d-flex justify-content-center'>
+              <div className='spinner-border text-primary' role='status'>
+                <span className='sr-only'>Loading...</span>
+              </div>
+            </div>
+          )}
+          {Post.posts.length > 0 && <BlogList posts={Post.posts.slice(0, 6)} />}
+          {Post.post.length === 0 && <h1 className='text-center'>No Post Found</h1>}
         </div>
       </main>
     </>
