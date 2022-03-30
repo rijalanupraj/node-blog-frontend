@@ -15,8 +15,9 @@ const AuthPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (password.length >= 6) {
+    if (password.length >= 6 && (isLogin || username.length >= 4)) {
       setBtnDisabled(false);
+
       if (Auth.loading) {
         setBtnDisabled(true);
       } else {
@@ -25,7 +26,7 @@ const AuthPage = () => {
     } else {
       setBtnDisabled(true);
     }
-  }, [password, Auth]);
+  }, [password, Auth, username]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -109,6 +110,11 @@ const AuthPage = () => {
                               value={username}
                               required
                             />
+                            {!isLogin && (
+                              <div className='form-text'>
+                                Username must be at least 4 characters
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
