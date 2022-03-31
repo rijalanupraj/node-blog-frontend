@@ -1,0 +1,243 @@
+.message-section {
+  background: white;
+  height: 77vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #dedede;
+  -moz-box-shadow: 2px 1px 21px #efefef;
+  -webkit-box-shadow: 2px 1px 21px #efefef;
+  box-shadow: 2px 1px 21px #efefef;
+  padding: 0;
+}
+
+.message-section div {
+  padding: 15px;
+}
+
+.message-section-top {
+  border-bottom: 1px solid #dedede;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  padding: 10px !important;
+  padding-top: 0 !important;
+  padding-bottom: 5px !important;
+}
+
+.message-section-top.not-seller {
+  padding-bottom: 10px !important;
+}
+
+.message-section-top.not-seller .typing-status {
+  top: 35px;
+}
+
+.message-section-bottom {
+  border-top: 1px solid #dedede;
+}
+
+.chat-settings button {
+  border: none;
+  background: none;
+}
+
+.chat-settings-list {
+  display: none;
+  outline: 0;
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  background: white;
+  width: 100px;
+  padding: 0 !important;
+  border: 1px solid #dedede;
+}
+
+.chat-settings-list button {
+  background: transparent;
+  border: transparent;
+  padding: 5px 10px !important;
+  width: 100% !important;
+  text-align: left;
+  transition: 0.3s;
+  font-size: 15.5px;
+}
+
+.chat-settings-list button:hover {
+  background: #bdbdbd;
+}
+
+.chat-settings {
+  outline: 0;
+  position: relative;
+}
+
+.chat-settings button {
+  outline: 0;
+}
+
+.chat-settings-btn:focus-within + .chat-settings-list {
+  display: block;
+}
+
+.chat-back-button {
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.chat-back-button:hover {
+  background: #bdbdbd;
+}
+
+.message-input {
+  resize: none;
+  height: 50px;
+  max-height: 80px;
+  width: 100%;
+  background: white;
+  border: white;
+  padding: 5px;
+  border-radius: 15px;
+  margin: 5px;
+}
+
+.message-section-bottom form button {
+  background: var(--primary-color);
+  font-size: 26px !important;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 3px 8px;
+  margin: 5px;
+}
+
+.message-section-bottom {
+  padding: 3px !important;
+  background: #dddddd;
+}
+
+.message-section-bottom form {
+  display: flex;
+  align-items: center;
+}
+
+.message-section-center {
+  padding: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.chat-box-container {
+  padding: 0 !important;
+  margin: 5px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.chat-box-container.right {
+  align-items: flex-end;
+}
+
+.chat-box-container.right .chat-box {
+  background: #dedede;
+}
+
+.chat-box-container.right .message-date {
+  float: left;
+}
+
+.chat-box {
+  display: inline-block;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 60%;
+  min-width: 5%;
+  width: auto;
+  border-radius: 15px;
+  background: #fff;
+  border: 1px solid#dedede;
+  padding: 5px 10px !important;
+}
+
+.chat-box p {
+  padding: 0;
+  margin: 0;
+}
+
+.message-date {
+  color: var(--text-muted);
+  font-size: 14px;
+  float: right;
+}
+
+.message-section-bottom input[type='file'] {
+  display: none;
+}
+
+.custom-file-upload {
+  cursor: pointer;
+  background: white;
+  padding: 3px 8px;
+  border: none;
+  background: #333333;
+  margin: 0;
+  color: white;
+  border-radius: 50%;
+  font-size: 25px !important;
+}
+
+.chat-picture {
+  max-width: 300px;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.message-box-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-box-bottom .seen-mark {
+  margin-right: 4px;
+  margin-top: -3px;
+}
+
+.unread-message-section {
+  background: white;
+  border-radius: 30px;
+  align-self: center;
+  padding: 10px 20px !important;
+}
+
+.unread-wrapper {
+  display: none;
+  width: 100%;
+  background: #efefef;
+}
+
+.unread-wrapper.show {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin: 20px 0;
+}
+
+.chatroom-highlight {
+  background: #e9e9e9;
+}
+
+@media only screen and (max-width: 612px) {
+  .message-section {
+    margin-top: -20px;
+  }
+
+  .message-section div {
+    padding: 10px;
+  }
+}

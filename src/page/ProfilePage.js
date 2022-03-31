@@ -2,15 +2,17 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Internal Import
 import { fetchUserProfileByUsername, fetchUserPublicPost } from '../redux/actions/profileActions';
 import { followUser, unFollowUser } from '../redux/actions/authActions';
 import NoProfilePic from '../assets/noProfilePic.jpg';
 import BlogList from '../components/BlogList';
+import { createConversation } from '../redux/actions/chatActions';
 
 function ProfilePage() {
+  const navigate = useNavigate();
   const { username } = useParams();
   const Profile = useSelector(state => state.Profile);
   const Auth = useSelector(state => state.Auth);
@@ -28,6 +30,11 @@ function ProfilePage() {
 
   const handleUnFollow = () => {
     dispatch(unFollowUser(Profile.profile._id));
+  };
+
+  const chatHandler = () => {
+    dispatch(createConversation(Profile.profile._id));
+    navigate('/chat');
   };
 
   if (Object.keys(Profile.profile).length === 0) {
@@ -79,10 +86,24 @@ function ProfilePage() {
                         Follow
                       </button>
                     ))}
+                  {Auth.isAuthenticated && Auth.user.username !== Profile.profile.username && (
+                    <button
+                      type='button'
+                      className='ms-2 btn btn-secondary'
+                      onClick={() => chatHandler()}
+                    >
+                      Chat
+                    </button>
+                  )}
                   {!Auth.isAuthenticated && (
-                    <Link to='/auth' className='btn btn-primary'>
-                      Follow
-                    </Link>
+                    <>
+                      <Link to='/auth' className='btn btn-primary'>
+                        Follow
+                      </Link>
+                      <Link to='/auth' className='ms-2 btn btn-secondary'>
+                        Chat
+                      </Link>
+                    </>
                   )}
                 </div>
               </div>

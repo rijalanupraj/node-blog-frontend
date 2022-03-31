@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 import { Auth } from './authReducer';
 import { Post } from './postReducer';
 import { Profile } from './profileReducer';
+import { Chat } from './chatReducer';
 
 function lastAction(state = null, action) {
   return action.type;
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   Auth,
   Post,
   Profile,
+  Chat,
   lastAction
 });
 

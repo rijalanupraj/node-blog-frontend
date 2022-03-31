@@ -11,6 +11,7 @@ import store from './redux/store';
 
 // Style Import
 import './style/main.css';
+import './style/chat.css';
 
 ReactDOM.render(
   <React.StrictMode>
