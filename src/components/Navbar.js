@@ -47,18 +47,19 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='nav-item'>
-              {Auth.isAuthenticated && (
-                <Link className='nav-link' to='/create'>
-                  Write
-                </Link>
-              )}
+              <Link className='nav-link' to={Auth.isAuthenticated ? '/chat' : '/auth'}>
+                Write
+              </Link>
             </li>
             <li className='nav-item'>
-              {Auth.isAuthenticated && (
-                <Link className='nav-link' to='/timeline'>
-                  Timeline
-                </Link>
-              )}
+              <Link className='nav-link' to={Auth.isAuthenticated ? '/timeline' : '/auth'}>
+                Timeline
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link className='nav-link' to={Auth.isAuthenticated ? '/chat' : '/auth'}>
+                Chat
+              </Link>
             </li>
           </ul>
         </div>

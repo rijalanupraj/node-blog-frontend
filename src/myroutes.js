@@ -18,9 +18,13 @@ import AllPostPage from './page/AllPostPage';
 import UpdatePostPage from './page/UpdatePostPage';
 import MyProfilePage from './page/MyProfilePage';
 import NotFoundPage from './page/NotFoundPage';
+import Conversations from './page/Conversations';
+import MessagePage from './page/MessagePage';
+import TestPage from './page/TestPage';
 
 const MyRoutes = () => {
   const User = useSelector(state => state.Auth);
+
   return (
     <Routes>
       <Route exact path='' element={<HomePage />} />
@@ -35,9 +39,18 @@ const MyRoutes = () => {
       </Route>
       <Route exact path='/post/:slug/update' element={<UpdatePostPage />} />
       <Route exact path='/my' element={<MyProfilePage />} />
+      <Route exact path='/chat' element={<Conversations />} />
       <Route exact path='/timeline' element={<PrivateRoute auth={User.isAuthenticated} />}>
         <Route exact path='/timeline' element={<Timeline />} />
       </Route>
+      <Route
+        exact
+        path='/chat/message/:conversationId'
+        element={<PrivateRoute auth={User.isAuthenticated} />}
+      >
+        <Route exact path='/chat/message/:conversationId' element={<MessagePage />} />
+      </Route>
+      <Route exact path='/test' element={<TestPage />} />
       <Route exact path='*' element={<NotFoundPage />} />
     </Routes>
   );
