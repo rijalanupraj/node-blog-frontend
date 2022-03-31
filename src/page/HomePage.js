@@ -31,8 +31,10 @@ const HomePage = () => {
     <>
       {/* Jumbotron Starts */}
       <div id='intro' className='p-5 text-center bg-light'>
-        <h1 className='mb-3 h2'>Lean and Explore</h1>
-        <p className='mb-3'>Discover stories, thinking, and expertise from writers on any topic.</p>
+        <h1 className='mb-3 h2'>Blogging & Chatting</h1>
+        <p className='mb-3'>
+          Write Your Own Post, Read Post, Comment Post, Follow User, Chat with other user
+        </p>
         <Link
           className='btn btn-primary m-2'
           to={Auth.isAuthenticated ? '/create' : '/auth'}

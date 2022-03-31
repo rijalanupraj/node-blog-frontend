@@ -47,7 +47,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' to={Auth.isAuthenticated ? '/chat' : '/auth'}>
+              <Link className='nav-link' to={Auth.isAuthenticated ? '/create' : '/auth'}>
                 Write
               </Link>
             </li>
