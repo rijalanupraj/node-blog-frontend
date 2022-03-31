@@ -31,6 +31,11 @@ const ActiveIndicator = Styled.div`
   margin-left: 3px !important;
 `;
 
+const SOCKET_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'
+    : 'https://my-node-blog-app.herokuapp.com';
+
 const MessagePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,7 +61,7 @@ const MessagePage = () => {
   }, [Chat.activeChat.participant]);
   useEffect(() => {
     if (isParticipantLoaded) {
-      socketRef.current = io('http://localhost:8000');
+      socketRef.current = io(SOCKET_URL);
       socketRef.current.on('connect', () => {
         console.log('connected');
       });
