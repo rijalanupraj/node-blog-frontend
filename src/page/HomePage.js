@@ -20,7 +20,8 @@ const HomePage = () => {
 
   // Get Most Commented Post
   const mostCommentedPost = () => {
-    return Post.posts
+    let mostCommented = [...Post.posts];
+    return mostCommented
       .sort((a, b) => {
         return b.comments.length - a.comments.length;
       })
